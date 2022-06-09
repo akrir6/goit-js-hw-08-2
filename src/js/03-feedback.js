@@ -33,8 +33,8 @@ function onFormInput(e) {
 }
 
 function onFormSubmit(e) {
+  e.preventDefault();
   if (feedBackFormData.email !== '' && feedBackFormData.message !== '') {
-    e.preventDefault();
     console.log(feedBackFormData);
 
     e.currentTarget.reset();
