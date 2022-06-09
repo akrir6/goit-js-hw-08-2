@@ -2,10 +2,11 @@ import Vimeo from '@vimeo/player';
 import throttle from 'lodash.throttle';
 
 const player = new Vimeo(document.querySelector('#vimeo-player'));
-const PLAYERCURRTIME = 'videoplayer-current-time';
-if (localStorage.getItem(PLAYERCURRTIME)) {
+const VIDEO_CURR_TIME = 'videoplayer-current-time';
+
+if (localStorage.getItem(VIDEO_CURR_TIME)) {
   player
-    .setCurrentTime(JSON.parse(localStorage.getItem(PLAYERCURRTIME)))
+    .setCurrentTime(JSON.parse(localStorage.getItem(VIDEO_CURR_TIME)))
     .catch(err => {
       switch (err.name) {
         case 'RangeError':
@@ -16,7 +17,7 @@ if (localStorage.getItem(PLAYERCURRTIME)) {
           break;
 
         default:
-          console.log('Some error occurred');
+          console.error(err.name);
           break;
       }
     });
@@ -25,6 +26,6 @@ if (localStorage.getItem(PLAYERCURRTIME)) {
 player.on(
   'timeupdate',
   throttle(e => {
-    localStorage.setItem(PLAYERCURRTIME, e.seconds);
+    localStorage.setItem(VIDEO_CURR_TIME, e.seconds);
   }, 1000)
 );
